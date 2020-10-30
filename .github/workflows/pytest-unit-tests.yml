@@ -11,29 +11,31 @@ on:
       - main
 
 jobs:
-  pytest:
-    name: unit testing
-    runs-on: ubuntu-latest
+  job1:
+    pytest:
+      name: unit testing
+      runs-on: ubuntu-20.04
 
-    steps:
-    - name: Checkout simple_functions
-      uses: actions/checkout@v2
+      steps:
+        - name: Checkout simple_functions
+          uses: actions/checkout@v2
 
-    - name: Set test directory
-      run : |
-        echo "::set-env name=TESTS::tests/"
+        - name: Set test directory
+          run: |
+            echo "::set-env name=TESTS::tests/"
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get install python3-setuptools -y
-        pip3 install --upgrade pip
-        pip3 install -e .
-        pip3 install -r requirements.txt
+        - name: Install dependencies
+          run: |
+            sudo apt-get install python3-setuptools -y
+            pip3 install --upgrade pip
+            pip3 install -e .
+            pip3 install -r requirements.txt
 
-    - name: Set a run prefix
-      run : |
-        echo "::set-env name=RUN::python3 -m"
+        - name: Set a run prefix
+          run: |
+            echo "::set-env name=RUN::python3 -m"
 
-    - name: Test with pytest
-      run: |
-        $RUN pytest $TESTS
+        - name: Test with pytest
+          run: |
+            $RUN pytest $TESTS
+
