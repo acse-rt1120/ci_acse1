@@ -1,0 +1,24 @@
+name: Flake8
+
+on:
+   # Trigger the workflow on push or pull request,
+   # but only for the main branch
+   push:
+     branches:
+       - main
+
+jobs:
+  flake8:
+
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2 #checking out it works on a vertial machine
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8
