@@ -1,0 +1,41 @@
+name: CI-unit-tests
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pytest:
+    name: unit testing
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout simple_functions
+        uses: actions/checkout@v2
+
+      - name: Set test directory
+        run: |
+          echo "::set-env name=TESTS::tests/"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -e .
+          pip install -r requirements.txt
+
+      - name: Set a run prefix
+        run: |
+          echo "::set-env name=RUN::python3 -m"
+
+      - name: Test with pytest
+        run: |
+          %RUN% pytest %TESTS%
+
+
+
