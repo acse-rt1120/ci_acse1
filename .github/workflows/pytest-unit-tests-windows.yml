@@ -19,23 +19,17 @@ jobs:
       - name: Checkout simple_functions
         uses: actions/checkout@v2
 
-      - name: Set test directory
-        run: |
-          echo "::set-env name=TESTS::tests/"
-
       - name: Install dependencies
         run: |
           pip install --upgrade pip
           pip install -e .
           pip install -r requirements.txt
-
-      - name: Set a run prefix
-        run: |
-          echo "::set-env name=RUN::python3 -m"
+        shell: cmd
 
       - name: Test with pytest
         run: |
-          %RUN% pytest %TESTS%
+          python -m pytest tests/
+        shell: cmd
 
 
 
